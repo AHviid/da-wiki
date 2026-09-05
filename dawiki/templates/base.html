@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="da">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}da-wiki{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="logo" href="/">da-wiki</a>
+      <form class="search" action="/" method="get" role="search">
+        <input type="search" name="q" value="{{ q|default('') }}" placeholder="Søg i artikler" aria-label="Søg i artikler">
+        <button type="submit">Søg</button>
+      </form>
+    </header>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>

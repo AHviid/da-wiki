@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} — da-wiki{% endblock %}
+{% block content %}
+  <article class="article">
+    <h1>{{ title }}</h1>
+    {% if redirected_from %}
+      <p class="redirected">Omdirigeret fra {{ redirected_from }}</p>
+    {% endif %}
+    <div class="body">
+      {{ body | safe }}
+    </div>
+    {% if timestamp %}
+      <p class="meta">Sidst redigeret {{ timestamp }}</p>
+    {% endif %}
+  </article>
+{% endblock %}

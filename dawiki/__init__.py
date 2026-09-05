@@ -1,0 +1,1 @@
+"""Local Danish Wikipedia browser."""

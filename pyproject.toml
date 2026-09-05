@@ -1,0 +1,21 @@
+[project]
+name = "da-wiki"
+version = "0.1.0"
+description = "Browse a local Danish Wikipedia dump"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi",
+    "jinja2",
+    "mwparserfromhell",
+    "uvicorn[standard]",
+]
+
+[project.scripts]
+dawiki = "dawiki.app:main"
+
+[tool.uv]
+package = true
+
+[tool.setuptools.packages.find]
+include = ["dawiki"]

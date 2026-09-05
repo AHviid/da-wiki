@@ -1,0 +1,28 @@
+# Local Wikipedia dumps (hundreds of MB)
+dumps/
+
+# Virtualenv and packaging
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Tools
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Environment and OS
+.env
+.env.*
+.DS_Store

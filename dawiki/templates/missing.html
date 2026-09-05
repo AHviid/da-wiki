@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} — da-wiki{% endblock %}
+{% block content %}
+  <section class="browse">
+    <h1>Artiklen findes ikke</h1>
+    <p>“{{ title }}” er ikke i det lokale dump.</p>
+    <p><a href="/?q={{ title|urlencode }}">Søg efter titlen</a></p>
+  </section>
+{% endblock %}

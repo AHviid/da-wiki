@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}{% if q %}{{ q }} — da-wiki{% else %}da-wiki{% endif %}{% endblock %}
+{% block content %}
+  <section class="browse">
+    <h1>Dansk Wikipedia</h1>
+    <p class="meta">
+      {% if q %}
+        {{ total }} artikler matcher “{{ q }}”
+      {% else %}
+        {{ total }} artikler · dump {{ dump_name }}
+      {% endif %}
+    </p>
+    {% if titles %}
+      <ol class="titles" start="{{ (page - 1) * page_size + 1 }}">
+        {% for title in titles %}
+          <li><a href="{{ title_to_path(title) }}">{{ title }}</a></li>
+        {% endfor %}
+      </ol>
+      <nav class="pager">
+        {% if has_prev %}
+          <a href="/?q={{ q|urlencode }}&amp;page={{ page - 1 }}">Forrige</a>
+        {% endif %}
+        <span>Side {{ page }} af {{ pages }}</span>
+        {% if has_next %}
+          <a href="/?q={{ q|urlencode }}&amp;page={{ page + 1 }}">Næste</a>
+        {% endif %}
+      </nav>
+    {% else %}
+      <p>Ingen artikler fundet.</p>
+    {% endif %}
+  </section>
+{% endblock %}

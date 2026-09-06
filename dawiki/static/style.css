@@ -163,3 +163,28 @@ a:hover {
   padding: 0;
   list-style: none;
 }
+
+.titles .views {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
+}
+
+.article .similar {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+.article .similar h2 {
+  margin: 0 0 0.6rem;
+  font-size: 1.25rem;
+}
+
+.article .similar ul {
+  padding-left: 1.2rem;
+}
+
+.article .similar li {
+  margin: 0.25rem 0;
+}

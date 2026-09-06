@@ -1,6 +1,9 @@
 # Local Wikipedia dumps (hundreds of MB)
 dumps/
 
+# Local Postgres data (bind-mounted by docker compose)
+data/
+
 # Virtualenv and packaging
 .venv/
 venv/

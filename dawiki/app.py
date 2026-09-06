@@ -11,7 +11,9 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
+from dawiki.db import similar_titles
 from dawiki.dump import DumpStore, find_dump, normalize_title
+from dawiki.pageviews import top_articles
 from dawiki.wikitext import render_wikitext, title_to_path
 
 HERE = Path(__file__).parent
@@ -43,6 +45,32 @@ def _store() -> DumpStore:
 async def home(request: Request, q: str = "", page: int = 1):
     dump = _store()
     page = max(1, page)
+    top = None
+    month = ""
+    if not q.strip():
+        fetched = top_articles(dump)
+        if fetched:
+            top, month = fetched
+
+    if top is not None:
+        return templates.TemplateResponse(
+            request,
+            "index.html",
+            {
+                "q": q,
+                "top_articles": top,
+                "month_label": month,
+                "titles": [],
+                "total": len(top),
+                "page": 1,
+                "page_size": PAGE_SIZE,
+                "pages": 1,
+                "has_prev": False,
+                "has_next": False,
+                "dump_name": dump.xml_path.parent.name,
+            },
+        )
+
     offset = (page - 1) * PAGE_SIZE
     titles, total = dump.search(q, offset=offset, limit=PAGE_SIZE)
     pages = max(1, (total + PAGE_SIZE - 1) // PAGE_SIZE)
@@ -51,6 +79,8 @@ async def home(request: Request, q: str = "", page: int = 1):
         "index.html",
         {
             "q": q,
+            "top_articles": None,
+            "month_label": "",
             "titles": titles,
             "total": total,
             "page": page,
@@ -89,6 +119,7 @@ async def article(request: Request, title: str):
             "body": render_wikitext(page.wikitext),
             "redirected_from": resolved.redirected_from,
             "timestamp": page.timestamp,
+            "similar": similar_titles(page.title),
         },
     )
 

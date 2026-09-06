@@ -132,6 +132,7 @@ class DumpStore:
         self.index_path = index_path
         self._by_title: dict[str, IndexRecord] = {}
         self.main_titles: list[str] = []
+        self.offsets: list[int] = []
         self._stream_cache: OrderedDict[int, dict[str, Page]] = OrderedDict()
         self._stream_cache_size = stream_cache_size
         self._load_index()
@@ -143,15 +144,21 @@ class DumpStore:
 
     def _load_index(self) -> None:
         main: list[str] = []
+        offsets: set[int] = set()
         with bz2.open(self.index_path, "rt", encoding="utf-8") as f:
             for line in f:
                 offset_s, page_id_s, title = line.rstrip("\n").split(":", 2)
                 rec = IndexRecord(int(offset_s), int(page_id_s), title)
                 self._by_title[normalize_title(title)] = rec
+                offsets.add(rec.offset)
                 if is_main_namespace(title):
                     main.append(title)
         main.sort(key=str.casefold)
         self.main_titles = main
+        self.offsets = sorted(offsets)
+
+    def pages_at_offset(self, offset: int) -> list[Page]:
+        return list(self._pages_at(offset).values())
 
     def lookup(self, title: str) -> IndexRecord | None:
         return self._by_title.get(normalize_title(title))

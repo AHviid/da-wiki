@@ -9,6 +9,16 @@
     <div class="body">
       {{ body | safe }}
     </div>
+    {% if similar %}
+      <nav class="similar">
+        <h2>Lignende artikler</h2>
+        <ul>
+          {% for t in similar %}
+            <li><a href="{{ title_to_path(t) }}">{{ t }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+    {% endif %}
     {% if timestamp %}
       <p class="meta">Sidst redigeret {{ timestamp }}</p>
     {% endif %}

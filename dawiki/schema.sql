@@ -1,0 +1,7 @@
+CREATE EXTENSION IF NOT EXISTS vector;
+
+CREATE TABLE IF NOT EXISTS articles (
+  page_id INTEGER PRIMARY KEY,
+  title TEXT NOT NULL UNIQUE,
+  embedding vector(384) NOT NULL
+);

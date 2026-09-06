@@ -6,9 +6,18 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "fastapi",
+    "httpx",
     "jinja2",
     "mwparserfromhell",
+    "pgvector",
+    "psycopg[binary]",
     "uvicorn[standard]",
+]
+
+[project.optional-dependencies]
+embed = [
+    "sentence-transformers",
+    "tqdm",
 ]
 
 [project.scripts]
